@@ -1,0 +1,105 @@
+PANDUAN SUMBER DATA ALUMNI GOOGLE SHEETS
+========================================
+
+Website membaca data dari Google Sheets melalui Google Apps Script Web App.
+Data yang ditampilkan di website bersifat publik, jadi jangan simpan nomor
+telepon, alamat lengkap, atau data sensitif di sheet ini.
+
+1. BUAT GOOGLE SHEET
+--------------------
+- Buat spreadsheet baru, misalnya: Database Alumni IKRAABI.
+- Ubah nama tab pertama menjadi: Alumni
+- Baris pertama wajib berisi header berikut (ejaan harus sama):
+
+  nama | angkatan | sekolah_lanjutan | jurusan | status | pekerjaan | instansi | kota
+
+- Mulai baris kedua, isi satu alumni per baris. Contoh:
+
+  Nama Alumni | 2026 | SMATQ ABI-UMMI | Teknik Informatika | Alumni | Software Engineer | Perusahaan | Jakarta Selatan
+
+- Kolom status sebaiknya menggunakan nilai yang konsisten, misalnya:
+  Alumni atau Alumni Berprestasi.
+
+2. BUAT API GOOGLE APPS SCRIPT
+------------------------------
+- Di spreadsheet, buka Extensions > Apps Script.
+- Hapus kode bawaan dan tempel kode berikut.
+- Ganti SPREADSHEET_ID dengan ID spreadsheet. ID berada di antara /d/ dan /edit
+  pada URL spreadsheet.
+
+  var SPREADSHEET_ID = 'GANTI_DENGAN_ID_SPREADSHEET';
+  var SHEET_NAME = 'Alumni';
+  var ADMIN_KEY = 'GANTI_DENGAN_KEY_ADMIN_YANG_PANJANG';
+
+  function doGet(e) {
+    var sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
+    var values = sheet.getDataRange().getDisplayValues();
+    var headers = values.shift().map(function (header) { return header.toLowerCase().trim(); });
+    var data = values.filter(function (row) { return row.join('').trim() !== ''; }).map(function (row) {
+      var item = {};
+      headers.forEach(function (header, index) { item[header] = row[index] || ''; });
+      return item;
+    });
+    return ContentService.createTextOutput(JSON.stringify({success: true, data: data}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  function doPost(e) {
+    var body = JSON.parse(e.postData.contents || '{}');
+    if (body.key !== ADMIN_KEY) return output({success: false, message: 'API key admin tidak valid.'});
+    if (body.action === 'auth') return output({success: true});
+    var sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
+    var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getDisplayValues()[0].map(function (header) { return header.toLowerCase().trim(); });
+    var data = body.data || {};
+    if (body.action === 'create') sheet.appendRow(headers.map(function (header) { return data[header] || ''; }));
+    if (body.action === 'update' || body.action === 'delete') {
+      var rows = sheet.getDataRange().getDisplayValues();
+      var nameIndex = headers.indexOf('nama');
+      var rowIndex = rows.slice(1).findIndex(function (row) { return row[nameIndex] === (body.action === 'update' ? data.original_nama : body.nama); });
+      if (rowIndex < 0) return output({success: false, message: 'Data alumni tersebut tidak ditemukan.'});
+      if (body.action === 'delete') sheet.deleteRow(rowIndex + 2);
+      if (body.action === 'update') sheet.getRange(rowIndex + 2, 1, 1, headers.length).setValues([headers.map(function (header) { return data[header] || ''; })]);
+    }
+    return output({success: true});
+  }
+
+  function output(value) {
+    return ContentService.createTextOutput(JSON.stringify(value)).setMimeType(ContentService.MimeType.JSON);
+  }
+
+- Klik Deploy > New deployment.
+- Pilih type Web app.
+- Execute as: Me.
+- Who has access: Anyone.
+- Klik Deploy, beri izin jika diminta, lalu salin Web app URL yang berakhiran /exec.
+- Jika kode Apps Script diubah, lakukan Deploy > Manage deployments > Edit > New version.
+
+3. HUBUNGKAN KE HALAMAN
+------------------------
+- Buka alumni-api.js.
+- Isi nilai API_URL dengan URL Web app tadi, contoh:
+
+  var API_URL = 'https://script.google.com/macros/s/ID_DEPLOYMENT/exec';
+
+- Jalankan website melalui Five Server/Live Server, lalu buka alumni.html.
+- Jangan membuka dari file:// jika browser memblokir request lintas sumber.
+
+4. PEMBARUAN DATA
+-----------------
+Edit atau tambah baris di Google Sheet. Halaman alumni akan mengambil data
+terbaru ketika dimuat ulang. Tidak perlu mengubah HTML untuk menambah alumni.
+
+5. DASHBOARD ADMIN
+------------------
+- Buka admin.html melalui Five Server/Live Server.
+- Masukkan nilai ADMIN_KEY yang sama dengan yang ada di Apps Script.
+- Gunakan tombol Tambah Alumni, edit, dan hapus pada tabel.
+- Dashboard menggunakan key yang dimasukkan untuk sesi halaman tersebut; key
+  tidak disimpan permanen di website.
+
+CATATAN KEAMANAN
+----------------
+Web App dengan akses Anyone adalah endpoint publik. Gunakan hanya data yang
+memang boleh dilihat umum. Untuk data privat, perlu backend dengan autentikasi,
+bukan endpoint publik seperti panduan ini. API key admin adalah pengaman dasar,
+bukan pengganti sistem login server-side yang sesungguhnya.

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direktori Alumni - IKRAABI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="site.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+        <div class="container"><a class="navbar-brand fw-bold" href="index.html">IKRAABI 2025/2027</a><button
+                class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav"><span
+                    class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav ms-auto fw-semibold">
+                    <li><a class="nav-link" href="index.html">Home</a></li>
+                    <li><a class="nav-link" href="layanan.html">Pendataan</a></li>
+                    <li><a class="nav-link" href="about.html">Tentang IKRAABI</a></li>
+                    <li><a class="nav-link" href="kalender.html">Kalender</a></li>
+                    <li><a class="nav-link" href="event.html">Agenda</a></li>
+                    <li><a class="nav-link" href="blog.html">Kabar IKRAABI</a></li>
+                    <li><a class="nav-link active" href="alumni.html">Direktori Alumni</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="flex-grow-1">
+        <div class="container py-5">
+            <div
+                class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 pb-3 border-bottom">
+                <div><span class="badge bg-primary px-3 py-1 rounded-pill fw-bold text-uppercase mb-2">Database
+                        Keluarga IKRAABI</span>
+                    <h1 class="embossed-title display-5 mb-1">Direktori Alumni IKRAABI</h1>
+                    <p class="text-muted fw-semibold mb-0">Temukan jejaring alumni SMATQ ABI-UMMI lintas angkatan dan berbagai kota.</p>
+                </div>
+            </div>
+            <div class="card card-custom p-4 bg-white mb-4">
+                <form data-alumni-filter class="row g-3 align-items-center">
+                    <div class="col-md-5">
+                        <div class="input-group"><span class="input-group-text bg-light"><i
+                                    class="bi bi-search"></i></span><input name="q" type="text" class="form-control"
+                                placeholder="Cari nama, jurusan, pekerjaan, kota..."></div>
+                    </div>
+                    <div class="col-md-3"><select name="angkatan" class="form-select">
+                            <option value="">Semua Angkatan</option>
+                            <option value="2026">Angkatan 2026</option>
+                            <option value="2025">Angkatan 2025</option>
+                            <option value="2024">Angkatan 2024</option>
+                            <option value="2023">Angkatan 2023</option>
+                        </select></div>
+                    <div class="col-md-3"><select name="status" class="form-select">
+                            <option value="">Semua Status</option>
+                            <option value="Alumni">Alumni (Lulus)</option>
+                            <option value="Alumni Berprestasi">Alumni Berprestasi</option>
+                        </select></div>
+                    <div class="col-md-1"><button class="btn btn-lime w-100 fw-bold">Cari</button></div>
+                </form>
+            </div>
+            <div class="row g-4" data-alumni-list>
+                <div class="col-12 text-center py-5" data-alumni-loading>
+                    <div class="spinner-border text-primary mb-3" role="status"></div>
+                    <p class="text-muted fw-semibold mb-0">Memuat data alumni...</p>
+                </div>
+                <div class="col-12 text-center py-5 d-none" data-empty-results>
+                    <p class="text-muted fs-5">Tidak ditemukan data alumni sesuai kriteria pencarian.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="mt-auto py-4 text-center" style="background:#84cc16"><strong>IKRAABI 2025/2027</strong> · <a
+            href="index.html" class="text-dark">Kembali ke Beranda</a></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="alumni-api.js"></script>
+    <script src="site.js"></script>
+</body>
+
+</html>
