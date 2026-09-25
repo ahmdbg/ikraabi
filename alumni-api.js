@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     // Paste the IKRAABI Google Apps Script Web App URL here.
-    var API_URL = 'https://script.google.com/macros/s/AKfycbxwsk-I869tDZ3sKvbLz-KZeWnKHe-9iGtih-XdteEZ4M9ArFbcOtVl8liXzaEvOBlLjw/exec';
+    var API_URL = 'https://script.google.com/macros/s/AKfycbwMXrTuISgxj2tD7ogFmNqVZBy_vRGwFjVjEs46ZN102Qexkz_TKMlNq9Enh6m-CFSD/exec';
     var list = document.querySelector('[data-alumni-list]');
 
     function escapeHtml(value) {
@@ -22,7 +22,7 @@
         }
         list.innerHTML = records.map(function (alumni) {
             var search = [alumni.nama, alumni.angkatan, alumni.sekolah_lanjutan, alumni.jurusan, alumni.pekerjaan, alumni.instansi, alumni.kota, alumni.status].join(' ').toLowerCase();
-            return '<div class="col-md-6" data-alumni-card data-search="' + escapeHtml(search) + '" data-year="' + escapeHtml(alumni.angkatan) + '" data-status="' + escapeHtml(alumni.status) + '">' +
+            return '<div class="col-md-3" data-alumni-card data-search="' + escapeHtml(search) + '" data-year="' + escapeHtml(alumni.angkatan) + '" data-status="' + escapeHtml(alumni.status) + '">' +
                 '<div class="card card-custom p-4 h-100"><span class="badge bg-primary-subtle text-primary fw-bold align-self-start mb-2">' + escapeHtml(alumni.status) + '</span>' +
                 '<h5 class="fw-bold text-dark">' + escapeHtml(alumni.nama) + '</h5><div class="small text-secondary">' +
                 '<div><i class="bi bi-calendar3"></i> Angkatan ' + escapeHtml(alumni.angkatan) + '</div>' +

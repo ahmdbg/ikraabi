@@ -1,0 +1,93 @@
+PANDUAN SUMBER DATA BLOG GOOGLE SHEETS
+======================================
+
+Halaman blog IKRAABI mengambil artikel dari spreadsheet Blog melalui Google
+Apps Script Web App terpisah dari spreadsheet Alumni. Setelah terhubung, Anda
+cukup menambah atau mengubah baris di spreadsheet, lalu memuat ulang blog.html.
+
+1. SIAPKAN SPREADSHEET
+----------------------
+- Buat spreadsheet baru, misalnya: Database Blog IKRAABI.
+- Ubah nama tab pertama menjadi tepat: Blog
+- Baris pertama wajib berisi header berikut. Gunakan huruf kecil dan tanda
+  underscore seperti contoh:
+
+ | kategori | penulis | judul | ringkasan | gambar | tautan | status
+
+- Mulai baris kedua, isi satu artikel per baris. Contoh:
+
+  20 September 2026 | Publikasi | Departemen Media | Silaturahmi Akbar Alumni IKRAABI 2026 | Menyatukan keluarga besar alumni SMATQ ABI-UMMI dalam suasana hangat dan penuh kontribusi. | https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80 | https://contoh.com/artikel | publish
+
+Keterangan kolom:
+- tanggal: teks tanggal yang ingin ditampilkan, misalnya 20 September 2026.
+- kategori: nama kategori untuk tombol filter, misalnya Publikasi, Organisasi,
+  atau Alumni.
+- penulis: nama departemen atau penulis artikel.
+- judul: judul artikel. Wajib diisi.
+- ringkasan: uraian singkat yang tampil di kartu blog.
+- gambar: URL gambar publik. Jika kosong, gambar bawaan akan dipakai.
+- tautan: URL artikel lengkap. Jika kosong, tombol baca tidak ditampilkan.
+- status: isi publish agar tampil. Kosong juga dianggap publish; isi draft,
+  arsip, atau nilai lain agar baris tidak ditampilkan.
+
+2. BUAT API GOOGLE APPS SCRIPT BLOG
+-----------------------------------
+- Di spreadsheet Blog, buka Extensions > Apps Script.
+- Hapus kode bawaan dan tempel kode berikut.
+- Ganti SPREADSHEET_ID dengan ID spreadsheet Blog. ID berada di antara /d/ dan
+  /edit pada URL spreadsheet.
+
+  var SPREADSHEET_ID = 'GANTI_DENGAN_ID_SPREADSHEET_BLOG';
+  var SHEET_NAME = 'Blog';
+
+  function doGet() {
+    var sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
+    if (!sheet) return output({success: false, message: 'Tab Blog tidak ditemukan.'});
+    var values = sheet.getDataRange().getDisplayValues();
+    if (!values.length) return output({success: true, data: []});
+    var headers = values.shift().map(function (header) { return header.toLowerCase().trim(); });
+    var data = values.filter(function (row) { return row.join('').trim() !== ''; }).map(function (row) {
+      var item = {};
+      headers.forEach(function (header, index) { item[header] = row[index] || ''; });
+      return item;
+    });
+    return output({success: true, data: data});
+  }
+
+  function output(value) {
+    return ContentService.createTextOutput(JSON.stringify(value)).setMimeType(ContentService.MimeType.JSON);
+  }
+
+Fungsi output wajib ikut ditempel. Spreadsheet Blog ini tidak membutuhkan
+fungsi doPost atau ADMIN_KEY karena blog hanya dibaca oleh website.
+
+3. DEPLOY WEB APP BLOG
+-----------------------
+- Di Apps Script Blog klik Deploy > New deployment.
+- Pilih type Web app.
+- Pilih Execute as: Me dan Who has access: Anyone.
+- Klik Deploy, beri izin jika diminta, lalu salin URL Web App yang berakhiran
+  /exec.
+- Jika kode Apps Script diubah, gunakan Deploy > Manage deployments > Edit >
+  New version.
+
+4. HUBUNGKAN HALAMAN BLOG
+-------------------------
+- Buka blog-api.js.
+- Isi API_URL dengan URL Web App dari spreadsheet Blog. Jangan gunakan URL pada
+  alumni-api.js.
+- Jalankan website memakai Five Server atau Live Server.
+- Buka blog.html dan muat ulang setelah mengubah isi spreadsheet.
+
+5. MENAMBAH ATAU MENGUBAH ARTIKEL
+----------------------------------
+- Tambah artikel dengan membuat baris baru di tab Blog.
+- Ubah isi artikel langsung pada baris yang sesuai.
+- Gunakan status draft untuk menyimpan artikel yang belum siap diterbitkan.
+- Tidak perlu mengubah blog.html atau blog-api.js setiap kali ada artikel baru.
+
+CATATAN KEAMANAN
+----------------
+Semua isi pada tab Blog yang dikirim oleh endpoint dapat dibaca publik. Jangan
+menaruh data rahasia, token, atau informasi pribadi di kolom spreadsheet.
+Gunakan URL gambar dan tautan yang memang boleh dibagikan ke umum.

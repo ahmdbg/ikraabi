@@ -40,8 +40,7 @@ telepon, alamat lengkap, atau data sensitif di sheet ini.
       headers.forEach(function (header, index) { item[header] = row[index] || ''; });
       return item;
     });
-    return ContentService.createTextOutput(JSON.stringify({success: true, data: data}))
-      .setMimeType(ContentService.MimeType.JSON);
+    return output({success: true, data: data});
   }
 
   function doPost(e) {

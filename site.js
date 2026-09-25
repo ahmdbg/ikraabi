@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var emptyResults = document.querySelector('[data-empty-results]');
             document.querySelectorAll('[data-alumni-card]').forEach(function (card) {
                 var matches = (!query || card.dataset.search.includes(query)) && (!year || card.dataset.year === year) && (!status || card.dataset.status === status);
-                card.closest('.col-md-6').classList.toggle('d-none', !matches);
+                card.closest('.col-md-3').classList.toggle('d-none', !matches);
                 if (matches) visible += 1;
             });
             if (emptyResults) emptyResults.classList.toggle('d-none', visible !== 0);
