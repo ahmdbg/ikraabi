@@ -1,0 +1,154 @@
+PANDUAN SUMBER DATA EVENT GOOGLE SHEETS
+=======================================
+
+Kalender dan halaman detail agenda mengambil data dari spreadsheet Event melalui
+Google Apps Script Web App. Setelah terhubung, perubahan judul, tanggal, waktu,
+lokasi, atau deskripsi di spreadsheet akan tampil di website saat halaman dimuat
+ulang. Data event pada endpoint ini dapat dibaca publik.
+
+1. SIAPKAN SPREADSHEET
+----------------------
+- Buat spreadsheet baru, misalnya: Database Event IKRAABI.
+- Ubah nama tab pertama menjadi tepat: Events
+- Atur zona waktu spreadsheet ke (GMT+07:00) Jakarta.
+- Baris pertama wajib berisi header berikut, dengan urutan dan ejaan yang sama:
+
+  id | judul | deskripsi | tanggal | mulai | selesai | lokasi | kategori
+
+- Isi satu event per baris, mulai dari baris kedua. Contoh:
+
+  rapat-kerja-2026 | Rapat Kerja Kabinet | Rapat kerja pengurus untuk membahas program dan koordinasi kegiatan IKRAABI. | 2026-09-13 | 09:00 | 15:00 | Kelurahan Patemon | Rapat
+  latihan-bulutangkis-2026 | Latihan Rutin Bulutangkis | Latihan rutin bulutangkis untuk menjaga kebugaran dan mempererat silaturahmi alumni. | 2026-09-20 | 15:00 | 17:00 | Lapangan Bulutangkis Maulana | Olahraga
+  temu-alumni-2026 | Temu Alumni dan Silaturahmi 2026 | Acara kebersamaan alumni IKRAABI untuk mempererat tali persaudaraan lintas angkatan. | 2026-09-26 | 08:30 | 13:00 | SMATQ ABI-UMMI | Silaturahmi
+  wse-2027 | WSE (Workshop Super Education) 2027 | Program pembekalan intensif dan tryout nasional SNBP/SNBT bagi alumni dan pelajar dalam keluarga besar IKRAABI. | 2027-01-15 | 08:00 | 15:00 | Pendopo SMATQ ABI-UMMI | Pendidikan
+
+Keterangan kolom:
+- id: identitas unik dan stabil, disarankan huruf kecil dengan tanda hubung.
+  ID menjadi bagian URL halaman detail; jangan menggantinya setelah dibagikan.
+- judul: nama event yang tampil di kalender dan detail.
+- deskripsi: ringkasan event. Boleh dikosongkan.
+- tanggal: isi sebagai nilai tanggal Google Sheets, misalnya 13/09/2026.
+  Setelah memasukkan tanggal, pastikan sel dikenali sebagai tanggal, bukan teks.
+  API mengirim tanggal ke website dalam format YYYY-MM-DD.
+- mulai dan selesai: isi sebagai nilai waktu, misalnya 09:00 dan 15:00.
+  Gunakan format 24 jam. Untuk saat ini event dimulai dan selesai pada tanggal
+  yang sama.
+- lokasi: tempat pelaksanaan. Boleh dikosongkan.
+- kategori: label kegiatan, misalnya Rapat, Olahraga, Silaturahmi, atau Pendidikan.
+
+Website menghitung status kegiatan dari tanggal dan jam mulai/selesai. Tanggal
+kalender mengikuti tanggal saat ini di zona waktu browser. Kalender menampilkan
+agenda sesuai bulan yang sedang dibuka; gunakan tombol panah untuk berpindah bulan.
+
+2. BUAT API GOOGLE APPS SCRIPT
+------------------------------
+- Dari spreadsheet Events, buka Extensions > Apps Script.
+- Hapus kode bawaan dan tempel kode di bawah ini.
+- Ganti SPREADSHEET_ID dengan ID spreadsheet, yaitu teks di antara /d/ dan /edit
+  pada URL spreadsheet.
+
+  var SPREADSHEET_ID = 'GANTI_DENGAN_ID_SPREADSHEET_EVENT';
+  var SHEET_NAME = 'Events';
+  var TIME_ZONE = 'Asia/Jakarta';
+
+  function doGet() {
+    try {
+      var spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
+      var sheet = spreadsheet.getSheetByName(SHEET_NAME);
+      if (!sheet) return output({success: false, message: 'Tab Events tidak ditemukan.'});
+
+      var values = sheet.getDataRange().getValues();
+      if (!values.length) return output({success: true, data: []});
+      var headers = values.shift().map(function (header) {
+        return String(header || '').toLowerCase().trim();
+      });
+      var required = ['id', 'judul', 'deskripsi', 'tanggal', 'mulai', 'selesai', 'lokasi', 'kategori'];
+      var missing = required.filter(function (header) { return headers.indexOf(header) < 0; });
+      if (missing.length) {
+        return output({success: false, message: 'Header spreadsheet belum lengkap: ' + missing.join(', ')});
+      }
+
+      var data = values.filter(function (row) {
+        return row.some(function (cell) { return cell !== '' && cell !== null; });
+      }).map(function (row) {
+        var item = {};
+        headers.forEach(function (header, index) {
+          item[header] = normalizeCell(row[index], header);
+        });
+        return item;
+      }).filter(function (item) {
+        return item.id && item.judul && item.tanggal && item.mulai && item.selesai;
+      });
+
+      return output({success: true, data: data});
+    } catch (error) {
+      return output({success: false, message: error.message});
+    }
+  }
+
+  function normalizeCell(value, header) {
+    if (value instanceof Date) {
+      if (header === 'tanggal') return Utilities.formatDate(value, TIME_ZONE, 'yyyy-MM-dd');
+      if (header === 'mulai' || header === 'selesai') return Utilities.formatDate(value, TIME_ZONE, 'HH:mm');
+    }
+    return value === null || value === undefined ? '' : String(value).trim();
+  }
+
+  function output(value) {
+    return ContentService.createTextOutput(JSON.stringify(value))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+Fungsi normalizeCell mengubah nilai tanggal dan waktu Google Sheets ke format
+yang dibaca website. Isi tanggal dan waktu sebagai nilai spreadsheet, bukan
+teks dengan format lokal yang tidak konsisten.
+
+3. DEPLOY WEB APP
+-----------------
+- Di Apps Script pilih Deploy > New deployment.
+- Pilih type Web app.
+- Execute as: Me.
+- Who has access: Anyone.
+- Klik Deploy, setujui izin yang diminta, lalu salin URL Web app yang berakhiran
+  /exec.
+- Jika kode Apps Script diubah setelah deploy, pilih Deploy > Manage deployments
+  > Edit > New version > Deploy.
+
+Web App harus dapat dibaca publik karena website tidak memakai login Google
+untuk mengambil agenda. Jangan masukkan informasi rahasia ke spreadsheet.
+
+4. HUBUNGKAN KE WEBSITE
+-----------------------
+- Buka event-api.js.
+- Isi API_URL di bagian atas file dengan URL Web App dari langkah sebelumnya:
+
+  var API_URL = 'https://script.google.com/macros/s/ID_DEPLOYMENT/exec';
+
+- Simpan perubahan, lalu buka kalender.html melalui Five Server atau Live Server.
+- Buka bulan yang memiliki tanggal event. Klik judul event di kalender atau
+  daftar bulanan untuk membuka halaman detailnya.
+- Halaman event mengambil ulang data dari spreadsheet saat dibuka. Tidak perlu
+  mengubah HTML atau JavaScript ketika menambah atau mengubah event.
+
+5. MENAMBAH ATAU MENGUBAH EVENT
+-------------------------------
+- Tambahkan satu baris baru untuk event baru.
+- Pastikan id unik, dan tanggal serta jam adalah nilai tanggal/waktu yang valid.
+- Ubah tanggal langsung di kolom tanggal; kalender akan menampilkan event pada
+  tanggal baru setelah halaman dimuat ulang.
+- Baris yang tidak memiliki id, judul, tanggal, waktu mulai, atau waktu selesai
+  tidak akan ditampilkan.
+
+PEMECAHAN MASALAH
+-----------------
+- Pesan “Data kegiatan belum terhubung”: API_URL di event-api.js masih kosong.
+- Pesan “gagal dimuat”: periksa URL /exec, status deployment Anyone, dan izin
+  akses Web App.
+- Data tidak terlihat: periksa nama tab Events, semua header, format tanggal dan
+  waktu, serta pastikan id dan judul sudah diisi.
+- Perubahan kode Apps Script belum terlihat: deploy ulang sebagai New version.
+
+CATATAN KEAMANAN
+----------------
+Semua data yang dikirim endpoint ini dapat dibaca publik. Jangan simpan data
+pribadi atau informasi internal pada kolom spreadsheet event.

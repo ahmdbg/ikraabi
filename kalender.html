@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Kalender Kegiatan - IKRAABI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="site.css">
+</head>
+
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+    <main class="flex-1">
+        <div class="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+            <div class="text-center mb-5">
+                <span class="mb-3 inline-flex rounded-full bg-blue-700 px-3 py-1 text-xs font-bold uppercase text-white">Jadwal & Rencana Kerja</span>
+                <h1 class="embossed-title mb-3 text-4xl font-black sm:text-5xl">Kalender Kegiatan IKRAABI</h1>
+                <p class="font-semibold text-slate-500">Pilih agenda pada kalender untuk melihat informasi lengkapnya.</p>
+            </div>
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+                <section class="lg:col-span-8" aria-label="Kalender bulanan">
+                    <div class="card-custom bg-white p-4 md:p-6" data-calendar>
+                        <div class="mb-4 flex items-center justify-between gap-3">
+                            <div class="flex min-w-0 items-center gap-2 sm:gap-3">
+                                <a class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-blue-700 text-blue-700 transition hover:bg-blue-700 hover:text-white" data-calendar-prev aria-label="Bulan sebelumnya" title="Bulan sebelumnya"><i data-lucide="chevron-left" class="h-5 w-5"></i></a>
+                                <h2 class="truncate text-lg font-bold capitalize text-slate-900 sm:text-xl" data-calendar-title></h2>
+                                <a class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-blue-700 text-blue-700 transition hover:bg-blue-700 hover:text-white" data-calendar-next aria-label="Bulan berikutnya" title="Bulan berikutnya"><i data-lucide="chevron-right" class="h-5 w-5"></i></a>
+                            </div>
+                            <span class="inline-flex shrink-0 items-center gap-2 rounded-full border border-slate-300 bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700"><span class="h-2 w-2 rounded-full bg-emerald-600"></span> WIB</span>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="calendar-table w-full border-collapse text-center">
+                                <thead><tr><th class="text-red-600">Min</th><th>Sen</th><th>Sel</th><th>Rab</th><th>Kam</th><th>Jum</th><th>Sab</th></tr></thead>
+                                <tbody data-calendar-grid></tbody>
+                            </table>
+                        </div>
+                        <p class="mb-0 mt-3 text-sm text-slate-500"><i data-lucide="info" class="mr-1 inline h-4 w-4"></i>Kalender mengikuti bulan dan tanggal saat ini.</p>
+                    </div>
+                </section>
+                <aside class="lg:col-span-4" aria-label="Agenda pada bulan terpilih">
+                    <div class="card-custom h-full bg-white p-5">
+                        <h2 class="mb-4 flex items-center gap-2 text-lg font-bold text-slate-900"><i data-lucide="list-checks" class="h-5 w-5 text-blue-700"></i> Agenda Bulan Ini</h2>
+                        <div class="agenda-list" data-month-agenda></div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+        <footer class="mt-auto bg-lime-500 py-4 text-center font-semibold"><strong>IKRAABI 2025/2027</strong> · <a
+            href="index.html" class="text-slate-900 underline">Kembali ke Beranda</a></footer>
+    <script src="site.js"></script>
+    <script src="event-api.js"></script>
+</body>
+
+</html>

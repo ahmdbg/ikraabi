@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IKRAABI — Ikatan Alumni SMATQ ABI-UMMI</title>
+<meta name="description" content="Website IKRAABI, wadah silaturahmi, komunikasi, dan kolaborasi alumni SMATQ ABI-UMMI.">
+
+<!-- Terapkan tema (light/dark) sebelum render untuk mencegah flash warna -->
+<script>
+  (function () {
+    var stored = localStorage.getItem("ikraabi-theme");
+    var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var theme = stored || (prefersDark ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+
+<!-- Open Graph -->
+<meta property="og:title" content="IKRAABI — Ikatan Alumni SMATQ ABI-UMMI">
+<meta property="og:description" content="Ruang silaturahmi, komunikasi, dan kolaborasi bagi keluarga besar alumni SMATQ ABI-UMMI.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="../assets/logo/logo-ikraabi.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="loading-screen" id="loadingScreen" aria-live="polite" aria-label="Memuat website IKRAABI">
+  <div class="loading-brand" aria-label="IKRAABI">
+    <span class="nav-logo-mark" aria-hidden="true">
+      <span class="nav-logo-badge nav-logo-badge-left"></span>
+      <span class="nav-logo-badge nav-logo-badge-right"></span>
+    </span>
+    <span class="nav-logo-text" aria-label="IKRAABI 2025/2027">
+      <span class="nav-logo-name">IKRAABI</span>
+      <span class="nav-logo-year">2025/2027</span>
+    </span>
+  </div>
+  <div class="loading-bar" aria-hidden="true"><span></span></div>
+  <p>Harap tunggu...</p>
+</div>
+
+<a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+<header class="navbar" id="navbar">
+  <div class="container">
+    <a href="#beranda" class="nav-logo" aria-label="Beranda IKRAABI">
+      <span class="nav-logo-mark" aria-hidden="true">
+        <span class="nav-logo-badge nav-logo-badge-left"></span>
+        <span class="nav-logo-badge nav-logo-badge-right"></span>
+      </span>
+      <span class="nav-logo-text" aria-label="IKRAABI 2025/2027">
+        <span class="nav-logo-name">IKRAABI</span>
+        <span class="nav-logo-year">2025/2027</span>
+      </span>
+    </a>
+
+    <nav class="nav-menu" aria-label="Navigasi utama">
+      <a href="#beranda">Beranda</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#alumni">Alumni</a>
+      <a href="#organisasi">Struktur </a>
+      <a href="#prestasi">Prestasi</a>
+      <a href="#berita">Berita</a>
+      <a href="#agenda">Agenda</a>
+      <a href="#galeri">Galeri</a>
+    </nav>
+
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Ganti tema terang/gelap" aria-pressed="false">
+        <svg class="icon-light" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="icon-dark" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+      </button>
+      <a href="#" class="btn btn-primary btn-sm desktop-only" data-form="dataAlumni">Daftarkan Alumni</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Buka menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg id="iconMenu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Navigasi mobile">
+    <a href="#beranda">Beranda</a>
+    <a href="#tentang">Tentang</a>
+    <a href="#alumni">Alumni</a>
+    <a href="#organisasi">Organisasi</a>
+    <a href="#prestasi">Prestasi</a>
+    <a href="#berita">Berita</a>
+    <a href="#agenda">Agenda</a>
+    <a href="#galeri">Galeri</a>
+    <div class="theme-toggle-row">
+      <span>Mode Tampilan</span>
+      <button class="theme-toggle" id="themeToggleMobile" aria-label="Ganti tema terang/gelap" aria-pressed="false">
+        <svg class="icon-light" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="icon-dark" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+      </button>
+    </div>
+    <a href="#" class="btn btn-primary btn-block" data-form="dataAlumni">Daftarkan Alumni</a>
+  </nav>
+</header>
+
+<main id="main-content">
+
+  <!-- =========================================================
+       HERO
+  ========================================================= -->
+  <section class="hero" id="beranda">
+    <div class="hero-decor-shape hero-shape-1"></div>
+    <div class="hero-decor-shape hero-shape-2"></div>
+    <div class="container">
+      <div class="hero-text">
+        <div class="hero-eyebrow"><span class="dot"></span> Ikatan Alumni SMATQ ABI-UMMI</div>
+        <h1>Selamat Datang di IKRAABI</h1>
+        <h2 class="sub">Terhubung dalam Silaturahmi, Bertumbuh dalam Kontribusi.</h2>
+        <p class="desc">Ruang silaturahmi, komunikasi, dan kolaborasi bagi keluarga besar alumni SMATQ ABI-UMMI.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary" data-form="dataAlumni">Daftarkan Data Alumni</a>
+          <a href="#tentang" class="btn btn-outline-light">Kenal IKRAABI</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-slider" aria-label="Slider foto kegiatan IKRAABI">
+          <div class="hero-slide active" role="img" aria-label="Foto kegiatan alumni IKRAABI 1" style="background-image: url('../assets/images/HERO1.jpg'); background-position: center center;"></div>
+          <div class="hero-slide" role="img" aria-label="Foto kegiatan alumni IKRAABI 2" style="background-image: url('../assets/images/HERO2.jpg'); background-position: center center;"></div>
+          <div class="hero-slide" role="img" aria-label="Foto kegiatan alumni IKRAABI 3" style="background-image: url('../assets/images/HERO3.jpg'); background-position: center center;"></div>
+          <div class="hero-slide" role="img" aria-label="Foto kegiatan alumni IKRAABI 4" style="background-image: url('../assets/images/HERO4.jpg'); background-position: center center;"></div>
+          <div class="hero-slide" role="img" aria-label="Foto kegiatan alumni IKRAABI 5" style="background-image: url('../assets/images/HERO6.jpg'); background-position: center center;"></div>
+          <div class="hero-slider-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="hero-badge">
+          <span class="num">10+</span>
+          <span class="label">Tahun<br>Perjalanan</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       TENTANG IKRAABI
+  ========================================================= -->
+  <section id="tentang" class="reveal">
+    <div class="container about-grid">
+      <div class="about-visual">
+        <!-- GANTI DENGAN FOTO ASLI IKRAABI -->
+        <img src="../assets/images/about-placeholder.jpg" alt="Alumni SMATQ ABI-UMMI">
+      </div>
+      <div class="about-text">
+        <div class="section-head" style="margin-bottom:24px;">
+          <div class="eyebrow-line"></div>
+          <h2>Tentang IKRAABI</h2>
+        </div>
+        <p class="lead">IKRAABI adalah wadah bagi alumni SMATQ ABI-UMMI untuk tetap terhubung, berbagi pengalaman, mengembangkan potensi, dan berkontribusi bersama.</p>
+
+        <div class="value-list">
+          <div class="value-item">
+            <div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <div>
+              <h4>Silaturahmi</h4>
+              <p>Menjaga hubungan antaralumni lintas angkatan.</p>
+            </div>
+          </div>
+          <div class="value-item">
+            <div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.2 4.2l4.2 4.2M15.5 15.5l4.3 4.3M1 12h6M17 12h6M4.2 19.8l4.2-4.2M15.5 8.5l4.3-4.3"/></svg></div>
+            <div>
+              <h4>Kolaborasi</h4>
+              <p>Membuka ruang kerja sama dan berbagi pengalaman.</p>
+            </div>
+          </div>
+          <div class="value-item">
+            <div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+            <div>
+              <h4>Kontribusi</h4>
+              <p>Bersama memberikan manfaat bagi almamater dan masyarakat.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       STATISTIK
+  ========================================================= -->
+  <section class="stats reveal">
+    <div class="container stats-grid">
+      <!-- GANTI DENGAN DATA ASLI IKRAABI -->
+      <div><div class="stat-num" data-count="500">0</div><div class="stat-label">Alumni</div></div>
+      <div><div class="stat-num" data-count="50">0</div><div class="stat-label">Perguruan Tinggi</div></div>
+      <div><div class="stat-num" data-count="20">0</div><div class="stat-label">Kota</div></div>
+      <div><div class="stat-num" data-count="10">0</div><div class="stat-label">Tahun Perjalanan</div></div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       STRUKTUR ORGANISASI
+  ========================================================= -->
+  <section id="organisasi" class="section-deep-navy reveal">
+    <div class="container">
+      <div class="section-head center on-dark">
+        <div class="eyebrow-line"></div>
+        <h2>Struktur Kepengurusan IKRAABI 2025/2027</h2>
+        <p>Susunan pengurus yang menjalankan roda organisasi IKRAABI.</p>
+      </div>
+
+      <div class="org-wrap" id="orgChart">
+        <!-- Rendered by script.js from the `organization` data object -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       ALUMNI — EXPLORE
+  ========================================================= -->
+  <section id="alumni" class="reveal">
+    <div class="container">
+      <div class="section-head center">
+        <div class="eyebrow-line"></div>
+        <h2>Jelajahi Alumni</h2>
+        <p>Berbagai cara untuk mengenal dan terhubung dengan alumni IKRAABI.</p>
+      </div>
+
+      <div class="card-grid-4">
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h4>Direktori Alumni</h4>
+          <p>Mengenal alumni lintas angkatan.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 18 22l-6-3-6 3 2.5-8.5"/></svg></div>
+          <h4>Alumni Berprestasi</h4>
+          <p>Menampilkan pencapaian alumni.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg></div>
+          <h4>Alumni Telah Wisuda</h4>
+          <p>Dokumentasi perjalanan akademik alumni.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg></div>
+          <h4>Cerita Alumni</h4>
+          <p>Cerita dan pengalaman perjalanan alumni.</p>
+        </div>
+      </div>
+
+      <!-- Directory -->
+      <div style="margin-top:64px;">
+        <div class="directory-controls">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="searchInput" placeholder="Cari nama alumni...">
+          </div>
+          <select class="filter-select" id="filterAngkatan"><option value="">Semua Angkatan</option></select>
+          <select class="filter-select" id="filterUniversitas"><option value="">Semua Universitas</option></select>
+          <select class="filter-select" id="filterKota"><option value="">Semua Kota</option></select>
+        </div>
+
+        <div class="alumni-grid" id="alumniGrid"></div>
+        <div class="alumni-load-more-wrap">
+          <button type="button" class="alumni-load-more" id="alumniLoadMore">Lihat lainnya</button>
+        </div>
+        <p class="empty-state" id="emptyState">Alumni tidak ditemukan. Coba kata kunci atau filter lain.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       PENDATAAN ALUMNI
+  ========================================================= -->
+  <section class="reveal">
+    <div class="container">
+      <div class="section-head center">
+        <div class="eyebrow-line"></div>
+        <h2>Tetap Terhubung dengan IKRAABI</h2>
+        <p>Lengkapi dan perbarui data Anda agar tetap terhubung dengan keluarga besar IKRAABI.</p>
+      </div>
+
+      <div class="connect-grid">
+        <div class="connect-card">
+          <div class="connect-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg></div>
+          <h4>Daftar Alumni</h4>
+          <p>Isi data diri untuk terdaftar sebagai anggota keluarga besar IKRAABI.</p>
+          <a href="#" class="btn btn-outline btn-sm" data-form="dataAlumni">Isi Formulir</a>
+        </div>
+        <div class="connect-card">
+          <div class="connect-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+          <h4>Update Data</h4>
+          <p>Perbarui informasi terbaru seperti domisili, pekerjaan, atau pendidikan.</p>
+          <a href="#" class="btn btn-outline btn-sm" data-form="updateData">Update Data</a>
+        </div>
+        <div class="connect-card">
+          <div class="connect-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 18 22l-6-3-6 3 2.5-8.5"/></svg></div>
+          <h4>Kirim Prestasi</h4>
+          <p>Bagikan capaian dan prestasi untuk didokumentasikan IKRAABI.</p>
+          <a href="#" class="btn btn-outline btn-sm" data-form="prestasi">Kirim Prestasi</a>
+        </div>
+        <div class="connect-card">
+          <div class="connect-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg></div>
+          <h4>Informasikan Wisuda</h4>
+          <p>Kabarkan kelulusan Anda agar tercatat dalam dokumentasi alumni.</p>
+          <a href="#" class="btn btn-outline btn-sm" data-form="wisuda">Isi Formulir</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       ALUMNI BERPRESTASI
+  ========================================================= -->
+  <section id="prestasi" class="reveal">
+    <div class="container">
+      <div class="section-head center">
+        <div class="eyebrow-line"></div>
+        <h2>Alumni Berprestasi</h2>
+        <p>Mengapresiasi pencapaian alumni di berbagai bidang.</p>
+      </div>
+
+      <div class="grid-3" id="prestasiGrid"></div>
+
+      <div class="section-footer-cta">
+        <a href="#" class="btn btn-primary" data-form="prestasi">Punya Prestasi? Kirim Data</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       AGENDA
+  ========================================================= -->
+  <section id="agenda" class="bg-alt reveal">
+    <div class="container">
+      <div class="section-head center">
+        <div class="eyebrow-line"></div>
+        <h2>Agenda IKRAABI</h2>
+        <p>Jadwal kegiatan dan pertemuan alumni yang akan datang.</p>
+      </div>
+
+      <div class="agenda-calendar">
+        <div class="agenda-calendar-header">
+          <button type="button" class="agenda-calendar-nav" id="agendaPrevMonth" aria-label="Bulan sebelumnya">&#8249;</button>
+          <h3 id="agendaMonthLabel">Bulan</h3>
+          <button type="button" class="agenda-calendar-nav" id="agendaNextMonth" aria-label="Bulan berikutnya">&#8250;</button>
+        </div>
+        <div class="agenda-calendar-weekdays">
+          <span>Sen</span>
+          <span>Sel</span>
+          <span>Rab</span>
+          <span>Kam</span>
+          <span>Jum</span>
+          <span>Sab</span>
+          <span>Min</span>
+        </div>
+        <div class="agenda-calendar-grid" id="agendaCalendar"></div>
+      </div>
+
+      <div class="agenda-list" id="agendaList"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       GALERI
+  ========================================================= -->
+  <section id="galeri" class="section-deep-navy reveal">
+    <div class="container">
+      <div class="section-head center on-dark">
+        <div class="eyebrow-line"></div>
+        <h2>Galeri IKRAABI</h2>
+        <p>Momen dan dokumentasi kegiatan keluarga besar IKRAABI.</p>
+      </div>
+
+      <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       CTA
+  ========================================================= -->
+  <section class="cta reveal">
+    <div class="container cta-content">
+      <h2>Tetap Menjadi Bagian dari IKRAABI</h2>
+      <p>Jarak boleh memisahkan, tetapi silaturahmi tetap terjaga.</p>
+      <a href="#" class="btn btn-primary" data-form="dataAlumni">Daftarkan Data Alumni</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand" aria-label="Logo IKRAABI">
+          <div class="footer-brand-logos" aria-hidden="true">
+            <span class="brand-badge brand-badge-left"></span>
+            <span class="brand-badge brand-badge-right"></span>
+          </div>
+          <div class="footer-brand-text">
+            <span class="brand-name">IKRAABI</span>
+            <span class="brand-year">2025/2027</span>
+          </div>
+        </div>
+        <p class="desc">IKRAABI — Ikatan Alumni SMATQ ABI-UMMI. Wadah silaturahmi, komunikasi, dan kolaborasi bagi keluarga besar alumni.</p>
+        <div class="footer-social" aria-label="Media sosial IKRAABI">
+          <a href="https://www.instagram.com/ikraabi.official" class="social-circle" target="_blank" rel="noopener noreferrer" aria-label="Instagram IKRAABI">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://wa.me/6281234567890?text=Halo%20IKRAABI" class="social-circle" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp IKRAABI">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/><path d="M8 9h8M8 13h6"/></svg>
+          </a>
+          <a href="mailto:info@ikraabi.official" class="social-circle" aria-label="Email IKRAABI">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Jelajahi</h4>
+        <div class="footer-links">
+          <a href="#beranda">Beranda</a>
+          <a href="#tentang">Tentang</a>
+          <a href="#alumni">Alumni</a>
+          <a href="#organisasi">Organisasi</a>
+          <a href="#prestasi">Prestasi</a>
+          <a href="#berita">Berita</a>
+          <a href="#agenda">Agenda</a>
+          <a href="#galeri">Galeri</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Pendataan</h4>
+        <div class="footer-data-grid">
+          <a href="#" class="footer-data-card" data-form="dataAlumni" aria-label="Daftar data alumni IKRAABI">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+            <span>Daftar Alumni</span>
+          </a>
+          <a href="#" class="footer-data-card" data-form="updateData" aria-label="Update data alumni IKRAABI">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            <span>Update Data</span>
+          </a>
+          <a href="#" class="footer-data-card" data-form="prestasi" aria-label="Kirim prestasi alumni IKRAABI">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 18 22l-6-3-6 3 2.5-8.5"/></svg>
+            <span>Prestasi</span>
+          </a>
+          <a href="#" class="footer-data-card" data-form="wisuda" aria-label="Informasikan wisuda alumni IKRAABI">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
+            <span>Wisuda</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">© 2026 IKRAABI — Ikatan Alumni SMATQ ABI-UMMI</div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Kembali ke atas">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+</button>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Galeri foto">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Tutup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Sebelumnya"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Berikutnya"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+</div>
+
+<script src="../common.js"></script>
+<script src="../articles.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

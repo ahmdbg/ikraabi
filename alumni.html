@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direktori Alumni - IKRAABI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="site.css">
+</head>
+
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+    <main class="flex-1">
+        <div class="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+            <div
+                class="mb-6 flex flex-col justify-between gap-3 border-b border-slate-200 pb-4 md:flex-row md:items-end">
+                <div><span class="mb-3 inline-flex rounded-full bg-blue-700 px-3 py-1 text-xs font-bold uppercase text-white">Database
+                        Keluarga IKRAABI</span>
+                    <h1 class="embossed-title mb-2 text-4xl font-black sm:text-5xl">Direktori Alumni IKRAABI</h1>
+                    <p class="mb-0 font-semibold text-slate-500">Temukan jejaring alumni SMATQ ABI-UMMI lintas angkatan dan berbagai kota.</p>
+                </div>
+            </div>
+            <div class="card-custom mb-6 bg-white p-5 md:p-6">
+                <form data-alumni-filter class="grid grid-cols-1 items-center gap-3 md:grid-cols-12">
+                    <div class="md:col-span-5">
+                        <label class="sr-only" for="alumni-search">Cari alumni</label><div class="flex"><span class="inline-flex items-center rounded-l-xl border border-r-0 border-slate-300 bg-slate-100 px-4 text-slate-500"><i data-lucide="search" class="h-4 w-4"></i></span><input id="alumni-search" name="q" type="text" class="min-w-0 flex-1 rounded-r-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                                placeholder="Cari nama, jurusan, pekerjaan, kota..."></div>
+                    </div>
+                    <div class="md:col-span-3"><label class="sr-only" for="alumni-year">Angkatan</label><select id="alumni-year" name="angkatan" class="w-full appearance-none rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100">
+                            <option value="">Semua Angkatan</option>
+                            <option value="2026">Angkatan 2026</option>
+                            <option value="2025">Angkatan 2025</option>
+                            <option value="2024">Angkatan 2024</option>
+                            <option value="2023">Angkatan 2023</option>
+                        </select></div>
+                    <div class="md:col-span-3"><label class="sr-only" for="alumni-status">Status</label><select id="alumni-status" name="status" class="w-full appearance-none rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100">
+                            <option value="">Semua Status</option>
+                            <option value="Alumni">Alumni (Lulus)</option>
+                            <option value="Alumni Berprestasi">Alumni Berprestasi</option>
+                        </select></div>
+                    <div class="md:col-span-1"><button class="btn-lime w-full px-4 py-3 font-bold">Cari</button></div>
+                </form>
+            </div>
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4" data-alumni-list>
+                <div class="py-12 text-center sm:col-span-2 lg:col-span-4" data-alumni-loading>
+                    <div class="mx-auto mb-3 h-8 w-8 animate-spin rounded-full border-4 border-blue-200 border-t-blue-700" role="status"></div>
+                    <p class="mb-0 font-semibold text-slate-500">Memuat data alumni...</p>
+                </div>
+                <div class="hidden py-12 text-center sm:col-span-2 lg:col-span-4" data-empty-results>
+                    <p class="text-lg text-slate-500">Tidak ditemukan data alumni sesuai kriteria pencarian.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+        <footer class="mt-auto bg-lime-500 py-4 text-center font-semibold"><strong>IKRAABI 2025/2027</strong> · <a
+            href="index.html" class="text-slate-900 underline">Kembali ke Beranda</a></footer>
+    <script src="alumni-api.js"></script>
+    <script src="site.js"></script>
+</body>
+
+</html>

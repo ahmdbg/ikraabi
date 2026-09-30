@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kabar IKRAABI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="site.css">
+</head>
+
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+    <main class="flex-1">
+        <div class="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+            <div class="text-center mb-5"><span
+                    class="mb-3 inline-flex rounded-full bg-blue-700 px-3 py-1 text-xs font-bold uppercase text-white">Publikasi &
+                    Literasi</span>
+                <h1 class="embossed-title mb-3 text-4xl font-black sm:text-5xl">Kabar IKRAABI</h1>
+                <p class="font-semibold text-slate-500">Berita kegiatan, prestasi, pendidikan, dan cerita alumni IKRAABI.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2" data-blog-list>
+                <div class="py-12 text-center md:col-span-2" data-blog-loading>
+                    <div class="mx-auto mb-3 h-8 w-8 animate-spin rounded-full border-4 border-blue-200 border-t-blue-700" role="status"></div>
+                    <p class="mb-0 font-semibold text-slate-500">Memuat kabar IKRAABI...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+        <footer class="mt-auto bg-lime-500 py-4 text-center font-semibold"><strong>IKRAABI 2025/2027</strong> · <a
+            href="index.html" class="text-slate-900 underline">Kembali ke Beranda</a></footer>
+        <script src="blog-api.js"></script>
+    <script src="site.js"></script>
+</body>
+
+</html>

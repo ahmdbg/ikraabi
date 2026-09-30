@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pendataan Alumni - IKRAABI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="site.css">
+</head>
+
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+    <main class="flex-1">
+        <div class="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+            <div class="text-center mb-5"><span
+                    class="mb-3 inline-flex rounded-full bg-blue-700 px-3 py-1 text-xs font-bold uppercase text-white">Portal Pendataan
+                    Terpadu</span>
+                <h1 class="embossed-title mb-3 text-4xl font-black sm:text-5xl">Pendataan Alumni IKRAABI</h1>
+                <p class="font-semibold text-slate-500">Lengkapi atau perbarui informasi Anda sebagai bagian dari keluarga besar IKRAABI.</p>
+            </div>
+            <div class="grid grid-cols-1 gap-8 lg:grid-cols-12">
+                <div class="lg:col-span-7">
+                    <div class="card-custom p-6 md:p-8">
+                        <h2 class="mb-6 flex items-center gap-2 text-xl font-bold text-slate-900"><i data-lucide="square-pen" class="h-5 w-5 text-blue-700"></i> Formulir
+                            Pengajuan / Pendataan</h4>
+                        <form data-static-form
+                                data-success="Formulir pendataan berhasil dikirim secara lokal. Hubungi pengurus IKRAABI melalui WhatsApp untuk tindak lanjut.">
+                                <div class="mb-4"><label class="mb-2 block text-sm font-bold text-slate-700">Jenis Layanan</label><select
+                                    class="w-full appearance-none rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100" required>
+                                        <option>Daftar Alumni</option>
+                                        <option>Update Data Alumni</option>
+                                        <option>Kirim Informasi Prestasi</option>
+                                        <option>Informasikan Wisuda</option>
+                                </select></div>
+                                <div class="mb-4"><label class="mb-2 block text-sm font-bold text-slate-700">Nama Lengkap Pemohon</label><input
+                                    type="text" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100" placeholder="Contoh: Muhammad Rizki"
+                                    required></div>
+                                <div class="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <div><label class="mb-2 block text-sm font-bold text-slate-700">Sekolah / Universitas</label><input type="text" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100" required>
+                                </div>
+                                <div><label class="mb-2 block text-sm font-bold text-slate-700">Nomor WhatsApp</label><input
+                                    type="tel" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100" required></div>
+                            </div>
+                                <div class="mb-4"><label class="mb-2 block text-sm font-bold text-slate-700">Email Aktif</label><input type="email"
+                                    class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100" placeholder="nama@gmail.com"></div>
+                                <div class="mb-6"><label class="mb-2 block text-sm font-bold text-slate-700">Keterangan / Catatan
+                                    Proposal</label><textarea class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100" rows="4"></textarea></div>
+                                <button type="submit" class="btn-lime inline-flex w-full items-center justify-center gap-2 py-3 shadow-sm"><i
+                                    data-lucide="send" class="h-4 w-4"></i> Kirim Formulir Sekarang</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="space-y-6 lg:col-span-5">
+                    <div class="card-custom p-6">
+                        <h2 class="mb-3 flex items-center gap-2 font-bold text-slate-900"><i data-lucide="info" class="h-5 w-5 text-blue-700"></i> Alur
+                            Pemrosesan</h5>
+                        <ol class="mb-0 list-decimal space-y-2 pl-5 text-sm leading-loose text-slate-600">
+                            <li>Isi formulir online secara lengkap dan benar.</li>
+                            <li>Hubungi pengurus IKRAABI melalui WhatsApp untuk verifikasi.</li>
+                            <li>Pengurus terkait akan menghubungi Anda.</li>
+                        </ol>
+                    </div>
+                    <div class="card-custom p-6">
+                        <h2 class="mb-3 flex items-center gap-2 font-bold text-slate-900"><i data-lucide="history" class="h-5 w-5 text-emerald-700"></i> Pengajuan
+                            Terkini</h5>
+                        <div class="text-sm">
+                            <div class="border-b border-slate-200 py-3"><strong>Fahmi Purwa Muarif</strong><span
+                                class="float-right rounded-full border border-slate-300 bg-slate-100 px-2 py-1 text-xs text-slate-700">Disetujui</span><br><span
+                                class="text-slate-500">prestasi · 20 Sep 2026</span></div>
+                            <div class="border-b border-slate-200 py-3"><strong>Alumni IKRAABI</strong><span
+                                class="float-right rounded-full border border-slate-300 bg-slate-100 px-2 py-1 text-xs text-slate-700">Menunggu Review</span><br><span
+                                class="text-slate-500">wisuda · 18 Sep 2026</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+        <footer class="mt-auto bg-lime-500 py-4 text-center font-semibold"><strong>IKRAABI 2025/2027</strong> · <a
+            href="index.html" class="text-slate-900 underline">Kembali ke Beranda</a></footer>
+    <script src="site.js"></script>
+</body>
+
+</html>
